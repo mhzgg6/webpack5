@@ -1,22 +1,23 @@
 const { resolve } = require('path')
 const ESLintPlugin = require('eslint-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-  mode: 'development',
+  mode: 'production',
   entry: './src/main.js',
   output: {
     //  入口文件打包输出文件名
     filename: 'js/main.js',
     //  __dirname 代表当前文件目录的绝对路径
-    path: resolve(__dirname, 'dist'),
-    clean: true
+    path: resolve(__dirname, '../dist')
   },
   module: {
     rules: [
       {
         test: /\.css$/,
         use: [
-          'style-loader',
+          MiniCssExtractPlugin.loader,
           'css-loader'
         ]
       },
@@ -58,12 +59,13 @@ module.exports = {
   },
   plugins: [
     new ESLintPlugin({
-      context: resolve(__dirname, 'src')
+      context: resolve(__dirname, '../src')
+    }),
+    new HtmlWebpackPlugin({
+      template: resolve(__dirname, "../public/index.html")
+    }),
+    new MiniCssExtractPlugin({
+      filename: 'css/main.css'
     })
-  ],
-  devServer: {
-    host: "localhost", // 启动服务器域名
-    port: "3000", // 启动服务器端口号
-    open: true  //  是否自动打开浏览器
-  }
+  ]
 }
