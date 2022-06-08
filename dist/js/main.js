@@ -1,1 +1,1 @@
-(()=>{"use strict";console.log(111),console.log(5)})();
+!function(){"use strict";console.log(111),console.log(5)}();

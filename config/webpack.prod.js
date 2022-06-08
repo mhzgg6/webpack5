@@ -2,6 +2,26 @@ const { resolve } = require('path')
 const ESLintPlugin = require('eslint-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerWebpackPlugin = require('css-minimizer-webpack-plugin');
+
+//  获取样式loader
+function getStyleLoader(pre) {
+  return [
+    MiniCssExtractPlugin.loader,// 提取 css 成单独文件
+    'css-loader',//  将 css 资源编译成 commonjs 模块到 js 中
+    {
+      loader: 'postcss-loader',
+      options: {
+        postcssOptions: {
+          plugins: [
+            'postcss-preset-env'//  能解决大多数样式兼容性问题
+          ]
+        },
+      },
+    },
+    pre
+  ].filter(Boolean)
+}
 
 module.exports = {
   mode: 'production',
@@ -16,10 +36,7 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader'
-        ]
+        use: getStyleLoader()
       },
       {
         test: /\.(png|jpe?g|gif|webp|svg)$/,
@@ -66,6 +83,7 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({
       filename: 'css/main.css'
-    })
+    }),
+    new CssMinimizerWebpackPlugin({})
   ]
 }
