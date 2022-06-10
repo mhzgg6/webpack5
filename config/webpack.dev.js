@@ -3,7 +3,7 @@ const ESLintPlugin = require('eslint-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  mode: 'production',
+  mode: 'development',
   //  相对路径
   entry: './src/main.js',
   output: {
@@ -27,11 +27,11 @@ module.exports = {
         test: /\.(png|jpe?g|gif|webp|svg)$/,
         type: 'asset',
         parser: {
-          dataUrlCondition: {
-            //  小于 10 kb 的图片转 base64
-            //  优点： 减少请求数量   缺点： 体积会更大
-            maxSize: 100000000 * 1024 
-          }
+          // dataUrlCondition: {
+          //   //  小于 10 kb 的图片转 base64
+          //   //  优点： 减少请求数量   缺点： 体积会更大
+          //   maxSize: 100000000 * 1024 
+          // }
         },
         //  将资源发送到指定目录
         generator: {
@@ -70,6 +70,8 @@ module.exports = {
   devServer: {
     host: "localhost", // 启动服务器域名
     port: "3000", // 启动服务器端口号
-    open: true  //  是否自动打开浏览器
-  }
+    open: true,  //  是否自动打开浏览器
+    hot: true
+  },
+  devtool: "cheap-module-source-map"
 }

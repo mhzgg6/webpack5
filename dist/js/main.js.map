@@ -1,0 +1,1 @@
+{"version":3,"file":"js/main.js","mappings":"yBAIAA,QAAQC,IADA,KAORD,QAAQC,IAAQ,EAAE,K","sources":["webpack://learning/./src/main.js"],"sourcesContent":["import \"./css/index.css\"\r\nimport \"./css/iconfont.css\"\r\n\r\nlet a = 111;\r\nconsole.log(a);\r\n\r\nlet add = (x, y) => {\r\n  return x + y()\r\n}\r\n\r\nconsole.log(add(2,3))"],"names":["console","log"],"sourceRoot":""}

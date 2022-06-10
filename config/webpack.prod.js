@@ -85,5 +85,6 @@ module.exports = {
       filename: 'css/main.css'
     }),
     new CssMinimizerWebpackPlugin({})
-  ]
+  ],
+  devtool: "source-map"
 }
