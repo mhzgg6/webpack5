@@ -17,45 +17,49 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader'
+        oneOf: [
+          {
+            test: /\.css$/,
+            use: [
+              'style-loader',
+              'css-loader'
+            ]
+          },
+          {
+            test: /\.(png|jpe?g|gif|webp|svg)$/,
+            type: 'asset',
+            parser: {
+              // dataUrlCondition: {
+              //   //  小于 10 kb 的图片转 base64
+              //   //  优点： 减少请求数量   缺点： 体积会更大
+              //   maxSize: 100000000 * 1024 
+              // }
+            },
+            //  将资源发送到指定目录
+            generator: {
+              filename: 'images/[hash:10][ext][query]'
+            }
+          },
+          //  处理字体图标和其他资源
+          {
+            test: /\.(ttf|woff2?|map3|map4|avi)$/,
+            type: "asset/resource",
+            generator: {
+              //  输出名称
+              filename: 'iconfont/[hash:10][ext][query]'
+            }
+          },
+          {
+            test: /\.js$/,
+            exclude: /node_modules/, // 排除 node_modules 中的 js 文件
+            loader: 'babel-loader'
+            //  通常在 根目录配置 babel.config.js
+            // options: {
+            //   presets: ['@babel/preset-env']
+            // }
+            
+          }
         ]
-      },
-      {
-        test: /\.(png|jpe?g|gif|webp|svg)$/,
-        type: 'asset',
-        parser: {
-          // dataUrlCondition: {
-          //   //  小于 10 kb 的图片转 base64
-          //   //  优点： 减少请求数量   缺点： 体积会更大
-          //   maxSize: 100000000 * 1024 
-          // }
-        },
-        //  将资源发送到指定目录
-        generator: {
-          filename: 'images/[hash:10][ext][query]'
-        }
-      },
-      //  处理字体图标和其他资源
-      {
-        test: /\.(ttf|woff2?|map3|map4|avi)$/,
-        type: "asset/resource",
-        generator: {
-          //  输出名称
-          filename: 'iconfont/[hash:10][ext][query]'
-        }
-      },
-      {
-        test: /\.js$/,
-        exclude: /node_modules/, // 排除 node_modules 中的 js 文件
-        loader: 'babel-loader'
-        //  通常在 根目录配置 babel.config.js
-        // options: {
-        //   presets: ['@babel/preset-env']
-        // }
-        
       }
     ]
   },
